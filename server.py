@@ -28,7 +28,7 @@ def regpage():
 @app.route('/main')
 def main():
     username_query = "SELECT CONCAT(first_name,' ',last_name) AS name FROM users WHERE id = :userid"
-    userid_data = {'userid': session['userid']['id']}
+    userid_data = {'userid': session['userid']}
     name = mysql.query_db(username_query, userid_data)[0]['name']
     wall_query = "SELECT CONCAT(first_name,' ',last_name) AS name, messages.id as msg_id, root_msg_id, messages.created_at AS msg_date, type, content FROM messages JOIN users ON messages.user_id = users.id ORDER BY root_msg_id DESC, messages.created_at ASC"
     wall_content = mysql.query_db(wall_query)
@@ -73,6 +73,7 @@ def create():
         data = {'email':request.form['email'], 'firstname' :request.form['firstname'], 'middlename' :request.form['middlename'], 'lastname' :request.form['lastname'], 'password': bcrypt.generate_password_hash(request.form['password']) }
         session['userid'] = mysql.query_db(query, data)
         print session['userid']
+        print 'exiting register route'
         return redirect('/main')
 
 @app.route('/login', methods=['POST'])
@@ -93,7 +94,8 @@ def login():
     if bcrypt.check_password_hash(user[0]['password'], password):
         query = "SELECT id FROM users WHERE email = :email"
         data = { 'email': email }
-        session['userid'] = mysql.query_db(query, data)[0]
+        session['userid'] = mysql.query_db(query, data)[0]['id']
+        print session['userid']
 
         return redirect('/main')
     else:
@@ -104,9 +106,8 @@ def login():
 def new_message():
     print 'new_message route'
     print session['userid']
-    print session['userid']['id']
     message_query = "INSERT INTO messages (content, user_id, type, created_at, updated_at) VALUES(:message, :user_id, :type, NOW(), NOW());"
-    message_data = {'message':request.form['content'], 'user_id' :session['userid']['id'], 'type': request.form['type']}
+    message_data = {'message':request.form['content'], 'user_id' :session['userid'], 'type': request.form['type']}
     newmsgid = mysql.query_db(message_query, message_data)
     print newmsgid
     query = 'UPDATE messages SET root_msg_id = :rt_msg_id WHERE id = :newmsgid'
@@ -116,7 +117,6 @@ def new_message():
         data = {'rt_msg_id': newmsgid, 'newmsgid':newmsgid}
     mysql.query_db(query, data)
     return redirect('/main')
-
 
 if __name__ == "__main__":
     app.run(debug=True)
