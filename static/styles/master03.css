@@ -1,0 +1,57 @@
+p{
+    margin: 0;
+    padding: 0;
+}
+p.messages{
+    color: red;
+    font-weight: bolder;
+}
+.msg{
+    color: red;
+    font-weight: bolder;
+}
+header{
+    margin: auto;
+    height: 35px;
+    width:90%;
+    display: flex;
+    justify-content: space-between;
+    background-color: silver;
+}
+header form{
+    margin: 10px 7px;
+    padding: 0;
+    display: inline;
+}
+header p{
+    margin: 10px 7px;
+    padding: 0;
+    display: inline;
+}
+.message p.name_date{
+    color: blue;
+    margin: 7px 0 0 0;
+}
+.comment p.name_date{
+    color: #B22222;
+    margin: 7px 0 0 0;
+}
+.message p.message_txt{
+    margin: 0 0 10px 0;
+}
+.comment p.comment_txt{
+    margin: 0 0 10px 0;
+}
+.message{
+    margin:0 0 5px 10px
+}
+.comment{
+    margin:0 0 5px 65px
+}
+.main{
+    width: 70%;
+    margin: auto;
+}
+.new_message{
+    margin: 10px 0 10px 5px
+}

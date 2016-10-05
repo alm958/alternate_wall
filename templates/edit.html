@@ -1,0 +1,28 @@
+<html>
+    <head>
+       <title>Edit</title>
+       <link rel="stylesheet" type="text/css" href="../static/styles/master.css">
+    </head>
+    <body>
+        <div class="main">
+            <h3>Edit Friend</h3>
+            <form action="/friends/<id>" method="post">
+                <p>ID: {{ friend[0]['id'] }}</p>
+                email : <input type="text" name="email" value="{{ friend[0]['email'] }}">
+                First Name : <input type="text" name="firstname" value="{{ friend[0]['firstname'] }}">
+                Last Name : <input type="text" name="lastname" value="{{ friend[0]['lastname'] }}">
+                <input type="hidden" name="id" value="{{ friend[0]['id'] }}">
+                <input type='submit' value='Update'>
+            </form>
+            <div class="msg">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </body>
+</html>

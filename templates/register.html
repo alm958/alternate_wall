@@ -1,0 +1,29 @@
+<html>
+    <head>
+       <title>The Wall Registration Page</title>
+       <link rel="stylesheet" type="text/css" href="../static/styles/master.css">
+    </head>
+    <body>
+        <div class="main">
+            <h3>Registration</h3>
+            <form action="/register" method="post">
+                e-mail : <br><input type="text" name="email" value="{{fields['email']}}"><br>
+                First Name : <br><input type="text" name="firstname" value="{{fields['firstname']}}"><br>
+                Middle Name : <br><input type="text" name="middlename" value="{{fields['middlename']}}"><br>
+                Last Name : <br><input type="text" name="lastname" value="{{fields['lastname']}}"><br>
+                Password: <br><input type="password" name="password" value=""><br>
+                Password Confirmation: <br><input type="password" name="password_confirmation" value=""><br>
+                <input type='submit' value='Submit'>
+            </form>
+            <div class="msg">
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </body>
+</html>

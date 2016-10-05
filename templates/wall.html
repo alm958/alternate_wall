@@ -1,0 +1,54 @@
+<html>
+    <head>
+       <title>The Wall</title>
+       <link rel="stylesheet" type="text/css" href="../static/styles/master0.css">
+    </head>
+    <body>
+        <header>
+                <p>CodingDojo Wall</p>
+                <form class='logout' action="/logout" method="post"> Welcome {{name}}  <input class='logout' type="submit" name="logout" value="logout"></form>
+        </header>
+        <div class="main">
+            <div class="new_message">
+                <form class="new_message" action="/message" method="post">
+                    <textarea class="form-control" type='text' name='content' rows="2" cols="60"></textarea><br>
+                    <input type="submit" name="submit" value="Post a message">
+                    <input type="hidden" name='type' value= 'root'>
+                </form>
+            </div>
+            {% for i in range(wall_content | length)%}
+                {% if wall_content[i]['type'] =='root' %}
+                    {% if i > 0 %}
+                        <div class="comment">
+                            <form class="new_comment" action="/message" method="post">
+                                <textarea class="form-control" type='text' name='content' rows="2" cols="60"></textarea><br>
+                                <input type="submit" name="submit" value="Post a comment">
+                                <input type="hidden" name='root_msg_id' value={{wall_content[i-1]['root_msg_id']}}>
+                                <input type="hidden" name='type' value= 'response'>
+                            </form>
+                        </div>
+                    {% endif %}
+                    <div class="message">
+                        <p class='name_date'>{{wall_content[i]['name']}} {{wall_content[i]['msg_date']}}</p>
+                        <p class='message_txt'>{{wall_content[i]['content']}}</p>
+                    </div>
+                {% else %}
+                    <div class="comment">
+                        <p class='name_date'>{{wall_content[i]['name']}} {{wall_content[i]['msg_date']}}</p>
+                        <p class='comment_txt'>{{wall_content[i]['content']}}</p>
+                    </div>
+                {% endif%}
+                {% if i == ((wall_content|length) - 1)  %}
+                <div class="comment">
+                    <form class="new_comment" action="/message" method="post">
+                        <textarea class="form-control" type='text' name='content' rows="2" cols="60"></textarea><br>
+                        <input type="submit" name="submit" value="Post a comment">
+                        <input type="hidden" name='root_msg_id' value={{wall_content[i]['root_msg_id']}}>
+                        <input type="hidden" name='type' value= 'response'>
+                    </form>
+                </div>
+                {% endif%}
+            {% endfor %}
+        </div>
+    </body>
+</html>

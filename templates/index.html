@@ -1,0 +1,23 @@
+<html>
+    <head>
+       <title>The Userdashboard Front Page</title>
+       <link rel="stylesheet" type="text/css" href="../static/styles/master.css">
+    </head>
+    <body>
+        <div class="main">
+            <h3>Welcome to The Dashboard</h3>
+            <p>Login or register to enter the site.</p>
+            <form action="/log" method="get"><input type='submit' value='Login'></form>
+            <form action="/reg" method="get"><input type='submit' value='Register'></form>
+        </div>
+        <div class="msg">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+    </body>
+</html>
